@@ -10,7 +10,7 @@ import UIKit
 
 class BuddyListController: UITableViewController {
     // 好友列表，作为表格的数据源
-    var bList = [WXMessage]()
+    var bList = [Message]()
     
     override func viewDidLoad() {
         super.viewDidLoad()

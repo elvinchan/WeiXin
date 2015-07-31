@@ -13,7 +13,7 @@
 		E1E7D3A01B6921E70074E85C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1E7D39E1B6921E70074E85C /* LaunchScreen.xib */; };
 		E1E7D3AC1B6921E70074E85C /* WeiXinTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E7D3AB1B6921E70074E85C /* WeiXinTests.swift */; };
 		E1E7D3B61B6924EE0074E85C /* BuddyListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E7D3B51B6924EE0074E85C /* BuddyListController.swift */; };
-		E1E7D3B81B6925F00074E85C /* WXMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E7D3B71B6925F00074E85C /* WXMessage.swift */; };
+		E1E7D3B81B6925F00074E85C /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E7D3B71B6925F00074E85C /* Message.swift */; };
 		E1E7D3BE1B692E820074E85C /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E7D3BD1B692E820074E85C /* LoginController.swift */; };
 		E1E7D3C01B6A46A80074E85C /* ChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E7D3BF1B6A46A80074E85C /* ChatController.swift */; };
 		E1E7D4291B6A4EA50074E85C /* XMPPAnonymousAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = E1E7D3C51B6A4EA50074E85C /* XMPPAnonymousAuthentication.m */; };
@@ -64,6 +64,8 @@
 		E1E7D45D1B6A4F3B0074E85C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E7D45C1B6A4F3B0074E85C /* UIKit.framework */; };
 		E1E7D45F1B6A4F440074E85C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E7D45E1B6A4F440074E85C /* Foundation.framework */; };
 		E1E7D4611B6A4F4C0074E85C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E7D4601B6A4F4C0074E85C /* CoreGraphics.framework */; };
+		E1E7D4661B6BA7240074E85C /* StatusDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E7D4651B6BA7240074E85C /* StatusDelegate.swift */; };
+		E1E7D4681B6BA7440074E85C /* MessageDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E7D4671B6BA7440074E85C /* MessageDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,7 +89,7 @@
 		E1E7D3AA1B6921E70074E85C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E1E7D3AB1B6921E70074E85C /* WeiXinTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeiXinTests.swift; sourceTree = "<group>"; };
 		E1E7D3B51B6924EE0074E85C /* BuddyListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuddyListController.swift; sourceTree = "<group>"; };
-		E1E7D3B71B6925F00074E85C /* WXMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WXMessage.swift; sourceTree = "<group>"; };
+		E1E7D3B71B6925F00074E85C /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		E1E7D3BD1B692E820074E85C /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		E1E7D3BF1B6A46A80074E85C /* ChatController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatController.swift; sourceTree = "<group>"; };
 		E1E7D3C41B6A4EA50074E85C /* XMPPAnonymousAuthentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPAnonymousAuthentication.h; sourceTree = "<group>"; };
@@ -183,6 +185,8 @@
 		E1E7D45E1B6A4F440074E85C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E1E7D4601B6A4F4C0074E85C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		E1E7D4641B6A50ED0074E85C /* wxxmpp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wxxmpp.h; sourceTree = "<group>"; };
+		E1E7D4651B6BA7240074E85C /* StatusDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusDelegate.swift; sourceTree = "<group>"; };
+		E1E7D4671B6BA7440074E85C /* MessageDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -243,9 +247,11 @@
 				E1E7D39E1B6921E70074E85C /* LaunchScreen.xib */,
 				E1E7D3931B6921E70074E85C /* Supporting Files */,
 				E1E7D3B51B6924EE0074E85C /* BuddyListController.swift */,
-				E1E7D3B71B6925F00074E85C /* WXMessage.swift */,
+				E1E7D3B71B6925F00074E85C /* Message.swift */,
 				E1E7D3BD1B692E820074E85C /* LoginController.swift */,
 				E1E7D3BF1B6A46A80074E85C /* ChatController.swift */,
+				E1E7D4651B6BA7240074E85C /* StatusDelegate.swift */,
+				E1E7D4671B6BA7440074E85C /* MessageDelegate.swift */,
 			);
 			path = WeiXin;
 			sourceTree = "<group>";
@@ -648,6 +654,7 @@
 				E1E7D4441B6A4EA50074E85C /* DDFileLogger.m in Sources */,
 				E1E7D4301B6A4EA50074E85C /* NSData+XMPP.m in Sources */,
 				E1E7D43F1B6A4EA50074E85C /* XMPPSRVResolver.m in Sources */,
+				E1E7D4681B6BA7440074E85C /* MessageDelegate.swift in Sources */,
 				E1E7D4421B6A4EA50074E85C /* DDAbstractDatabaseLogger.m in Sources */,
 				E1E7D4371B6A4EA50074E85C /* XMPPModule.m in Sources */,
 				E1E7D4451B6A4EA50074E85C /* DDLog.m in Sources */,
@@ -657,8 +664,9 @@
 				E1E7D4391B6A4EA50074E85C /* XMPPPresence.m in Sources */,
 				E1E7D42A1B6A4EA50074E85C /* XMPPDeprecatedDigestAuthentication.m in Sources */,
 				E1E7D43B1B6A4EA50074E85C /* DDList.m in Sources */,
+				E1E7D4661B6BA7240074E85C /* StatusDelegate.swift in Sources */,
 				E1E7D42D1B6A4EA50074E85C /* XMPPPlainAuthentication.m in Sources */,
-				E1E7D3B81B6925F00074E85C /* WXMessage.swift in Sources */,
+				E1E7D3B81B6925F00074E85C /* Message.swift in Sources */,
 				E1E7D3B61B6924EE0074E85C /* BuddyListController.swift in Sources */,
 				E1E7D4331B6A4EA50074E85C /* XMPPElement.m in Sources */,
 				E1E7D43D1B6A4EA50074E85C /* RFImageToDataTransformer.m in Sources */,
