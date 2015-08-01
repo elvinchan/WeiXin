@@ -8,18 +8,97 @@
 
 import UIKit
 
-class ChatController: UITableViewController {
+class ChatController: UITableViewController, MessageDelegate {
     @IBOutlet weak var msgTextField: UITextField!
     @IBOutlet weak var sendButton: UIBarButtonItem!
 
+    @IBAction func composing(sender: UITextField) {
+        // 构建XML元素message
+        var xmlMessage = DDXMLElement.elementWithName("message") as! DDXMLElement
+        
+        // 增加属性
+        xmlMessage.addAttributeWithName("to", stringValue:toBuddyName)
+        xmlMessage.addAttributeWithName("from", stringValue: NSUserDefaults.standardUserDefaults().stringForKey("weixinID"))
+        
+        // 构建正在输入元素
+        var composing = DDXMLElement.elementWithName("composing") as! DDXMLElement
+        composing.addAttributeWithName("xmlns", stringValue: "http://jabber.org/protocol/chatstates")
+        
+        xmlMessage.addChild(composing)
+        
+        appDelegate().xs!.sendElement(xmlMessage)
+    }
+    
+    @IBAction func send(sender: UIBarButtonItem) {
+        // 获取聊天文本
+        let msgStr = msgTextField.text
+        
+        // 如果不为空
+        if (!msgStr.isEmpty) {
+            // 构建XML元素message
+            var xmlMessage = DDXMLElement.elementWithName("message") as! DDXMLElement
+            
+            // 增加属性
+            xmlMessage.addAttributeWithName("type", stringValue: "chat")
+            xmlMessage.addAttributeWithName("to", stringValue:toBuddyName)
+            xmlMessage.addAttributeWithName("from", stringValue: NSUserDefaults.standardUserDefaults().stringForKey("weixinID"))
+            
+            // 构建正文
+            var body = DDXMLElement.elementWithName("body") as! DDXMLElement
+            body.setStringValue(msgStr)
+            
+            // 把正文加入到消息的子节点
+            xmlMessage.addChild(body)
+            
+            // 通过通道发送XML文本
+            appDelegate().xs!.sendElement(xmlMessage)
+            
+            // 清空聊天框
+            msgTextField.text = ""
+            
+            // 保存自己发送的消息
+            var msg = Message()
+            
+            msg.isSelf = true
+            msg.body = msgStr
+            
+            // 加入到聊天记录
+            msgList.append(msg)
+            
+            self.tableView.reloadData()
+        }
+    }
+    // 选择聊天的好友
+    var toBuddyName = ""
+    
+    // 聊天记录
+    var msgList = [Message]()
+    
+    // 收到消息
+    func newMsg(msg: Message) {
+        // 对方正在输入
+        if (msg.isComposing) {
+            self.navigationItem.title = "对方正在输入..."
+        } else if (msg.body != "") {
+            self.navigationItem.title = toBuddyName
+            
+            // 如果消息有正文，则加入到未读消息组，通知表格刷新
+            msgList.append(msg)
+            
+            // 通知表格刷新
+            self.tableView.reloadData()
+        }
+    }
+    
+    func appDelegate() -> AppDelegate {
+        return UIApplication.sharedApplication().delegate as! AppDelegate
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        // 接管消息代理
+        appDelegate().messageDelegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -29,71 +108,26 @@ class ChatController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Potentially incomplete method implementation.
-        // Return the number of sections.
-        return 0
-    }
-
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
-        return 0
+        return msgList.count
     }
 
-    /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as! UITableViewCell
-
-        // Configure the cell...
+        let cell = tableView.dequeueReusableCellWithIdentifier("chatCell", forIndexPath: indexPath) as! UITableViewCell
+        
+        // 取对应的消息
+        let msg = msgList[indexPath.row]
+        
+        // 对单元格的文本的格式做个调整
+        if (msg.isSelf) {
+            cell.textLabel?.textAlignment = .Right
+            cell.textLabel?.textColor = UIColor.grayColor()
+        } else {
+            cell.textLabel?.textColor = UIColor.orangeColor()
+        }
+        
+        cell.textLabel?.text = msg.body
 
         return cell
     }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

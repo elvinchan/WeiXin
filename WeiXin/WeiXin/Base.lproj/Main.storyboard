@@ -175,9 +175,12 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <action selector="composing:" destination="KvZ-b8-KK1" eventType="editingChanged" id="e9o-7H-S8W"/>
+                            </connections>
                         </textField>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="ONj-Ms-cHi">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="chatCell" id="ONj-Ms-cHi">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ONj-Ms-cHi" id="Ywc-Wn-Vcd">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -190,7 +193,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="聊天" id="R7B-ef-8Nq">
-                        <barButtonItem key="rightBarButtonItem" title="发送" id="z7v-b7-Dgn"/>
+                        <barButtonItem key="rightBarButtonItem" title="发送" id="z7v-b7-Dgn">
+                            <connections>
+                                <action selector="send:" destination="KvZ-b8-KK1" id="D3G-RZ-Clf"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="msgTextField" destination="3OB-QW-aqv" id="jXN-rR-IXf"/>

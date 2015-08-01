@@ -89,7 +89,7 @@ class BuddyListController: UITableViewController, StatusDelegate, MessageDelegat
         self.tableView.reloadData()
     }
     
-    // 下线状态处理
+    // 获取总代理
     func appDelegate() -> AppDelegate {
         return UIApplication.sharedApplication().delegate as! AppDelegate
     }
@@ -147,10 +147,13 @@ class BuddyListController: UITableViewController, StatusDelegate, MessageDelegat
             self.performSegueWithIdentifier("toLoginSegue", sender: self)
         }
         
-        // 接管消息代理
-        appDelegate().messageDelegate = self
         // 接管状态代理
         appDelegate().statusDelegate = self
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        // 接管消息代理
+        appDelegate().messageDelegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -204,15 +207,37 @@ class BuddyListController: UITableViewController, StatusDelegate, MessageDelegat
         self.performSegueWithIdentifier("toChatSegue", sender: self)
     }
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
+        // 是否转到聊天界面
+        if (segue.identifier == "toChatSegue") {
+            // 取聊天视图的控制器
+            let destVc = segue.destinationViewController as! ChatController
+            
+            // 把当前单元格的用户名传递给聊天视图
+            destVc.toBuddyName = currentBuddyName
+            
+            // 把未读消息传递给聊天视图
+            for msg in unreadList {
+                if msg.from == currentBuddyName {
+                    // 加入到聊天视图的消息组中
+                    destVc.msgList.append(msg)
+                }
+            }
+            
+            // 把相应的未读消息从未读消息组中移除
+//            removeValueFromArray(currentBuddyName, &unreadList)
+            
+            unreadList = unreadList.filter{ $0.from != self.currentBuddyName }
+            
+            // 刷新表格
+            self.tableView.reloadData()
+        }
     }
-    */
+
     
     @IBAction func unwindToBList(segue: UIStoryboardSegue) {
         // 如果是登录界面的完成按钮点击了，开始登录
