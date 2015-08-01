@@ -84,25 +84,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, XMPPStreamDelegate {
     }
     
     
-    // 连接成功
+    // 3.连接成功
     func xmppStreamDidConnect(sender: XMPPStream!) {
         isOpen = true
         // 验证密码
         xs!.authenticateWithPassword(pwd, error: nil)
     }
     
-    // 验证成功
+    // 4.验证成功
     func xmppStreamDidAuthenticate(sender: XMPPStream!) {
         goOnline()
     }
     
-    // 建立通道
+    // 2.建立通道
     func buildStream() {
         xs = XMPPStream()
         xs?.addDelegate(self, delegateQueue: dispatch_get_main_queue())
     }
     
-    // 发送上线状态
+    // 5.发送上线状态
     func goOnline() {
         var p = XMPPPresence()
         xs!.sendElement(p)
@@ -114,7 +114,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, XMPPStreamDelegate {
         xs!.sendElement(p)
     }
     
-    // 连接服务器（查看服务器是否可连接）
+    // 1.连接服务器（查看服务器是否可连接）
     func connect() -> Bool {
         buildStream()
         
@@ -143,9 +143,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, XMPPStreamDelegate {
     
     // 断开连接
     func disConnect() {
-        goOffline()
-        xs!.disconnect()
-        
+        if xs != nil {
+            if xs!.isConnected() {
+                goOffline()
+                xs!.disconnect()
+            }
+        }
     }
     
 

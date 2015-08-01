@@ -16,7 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="wangwu@wenqiang" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SFx-0d-xHa">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="wangwu@wenqiang.local" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SFx-0d-xHa">
                                 <rect key="frame" x="200" y="124" width="200" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="Uql-J3-Ykd"/>
@@ -35,11 +35,20 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4pB-dM-Vg5">
+                                <rect key="frame" x="351" y="334" width="51" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="31" id="FbM-R6-deB"/>
+                                    <constraint firstAttribute="width" constant="49" id="wfB-9J-60X"/>
+                                </constraints>
+                            </switch>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="sRm-to-Ewz" firstAttribute="top" secondItem="SFx-0d-xHa" secondAttribute="bottom" constant="40" id="9Vk-Ph-2OV"/>
+                            <constraint firstItem="4pB-dM-Vg5" firstAttribute="top" secondItem="O0c-r1-YF7" secondAttribute="bottom" constant="40" id="GRm-Km-zMG"/>
                             <constraint firstItem="O0c-r1-YF7" firstAttribute="top" secondItem="sRm-to-Ewz" secondAttribute="bottom" constant="40" id="GqT-cJ-WfG"/>
+                            <constraint firstItem="O0c-r1-YF7" firstAttribute="trailing" secondItem="4pB-dM-Vg5" secondAttribute="trailing" id="Net-uH-TcG"/>
                             <constraint firstAttribute="centerX" secondItem="SFx-0d-xHa" secondAttribute="centerX" id="Q6Q-kK-AqU"/>
                             <constraint firstItem="sRm-to-Ewz" firstAttribute="height" secondItem="O0c-r1-YF7" secondAttribute="height" id="aa5-Pe-RJB"/>
                             <constraint firstItem="SFx-0d-xHa" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="60" id="b1W-9U-Adk"/>
@@ -63,6 +72,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="autoLoginSwitch" destination="4pB-dM-Vg5" id="myH-l1-J7Z"/>
                         <outlet property="doneButton" destination="vGY-va-Khy" id="IDl-nQ-Dax"/>
                         <outlet property="pwdTextField" destination="sRm-to-Ewz" id="zCJ-2G-r2O"/>
                         <outlet property="serverTextField" destination="O0c-r1-YF7" id="v1B-Pe-H01"/>
@@ -96,7 +106,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="好友列表" id="dc7-1D-zUC">
-                        <barButtonItem key="leftBarButtonItem" id="rDt-UA-7XF"/>
+                        <barButtonItem key="leftBarButtonItem" title="..." id="rDt-UA-7XF">
+                            <connections>
+                                <action selector="logChange:" destination="muq-XZ-Rol" id="Q6c-vi-BfU"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="登录" id="zwx-VH-30T">
                             <connections>
                                 <segue destination="Y1h-sN-q3R" kind="presentation" identifier="toLoginSegue" id="KNw-rj-h8O"/>
@@ -104,6 +118,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="myStatus" destination="rDt-UA-7XF" id="ArY-O6-sAq"/>
                         <segue destination="KvZ-b8-KK1" kind="show" identifier="toChatSegue" id="fHh-DS-ont"/>
                     </connections>
                 </tableViewController>
